@@ -1,0 +1,26 @@
+﻿> docker pull mcr.microsoft.com/mssql/server:2022-latest
+
+> docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Y@Passw0rd" -p 1433:1433 --name sql1 --hostname sql1 -v sqlvolume:/var/opt/mssql -d mcr.microsoft.com/mssql/server:2022-latest
+
+
+
+>> Add-Migration Initial -Project TaskManagerSample.Infrastructure -StartupProject TaskManagerSample.API
+>> Update-Database -Project TaskManagerSample.Infrastructure -StartupProject TaskManagerSample.API
+
+
+
+1. Autenticação e Autorização:
+o Os usuários devem se autenticar para acessar o sistema.
+o Apenas usuários autenticados podem criar, editar, deletar e visualizar 
+tarefas.
+o Admins podem gerenciar usuários e visualizar todas as tarefas.
+2. Gerenciamento de Tarefas:
+o Usuários podem criar novas tarefas, especificando título, descrição, data 
+de vencimento e responsável.
+o Usuários podem editar e deletar suas próprias tarefas.
+o Admins podem editar e deletar qualquer tarefa.
+o Tarefas devem ter um status (Pendente, Em Progresso, Concluído).
+3. Dashboard:
+o Uma página inicial que mostra todas as tarefas atribuídas ao usuário 
+logado, filtradas por status.
+o Admins devem ver um resumo de todas as tarefas.

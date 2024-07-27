@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      SA_PASSWORD: "Y@Passw0rd"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - db_data:/var/opt/mssql/data
+      #- sqlvolume:/var/opt/mssql
+       
+  taskmanagersample.api:
+    image: ${DOCKER_REGISTRY-}taskmanagersampleapi
+    build:
+      context: ..
+      dockerfile: TaskManagerSample/TaskManagerSample.API/Dockerfile
+
+volumes:
+  web_data:
+  db_data:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /data/db_data
+      o: bind
